@@ -130,9 +130,9 @@
     <a href="#" class="forgot">Lupa kata sandi?</a>
   </div>
 </body>
-  <!-- Firebase SDK -->
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+ <!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js"></script>
 
 <script>
   // Konfigurasi Firebase
@@ -142,16 +142,16 @@
     projectId: "retrofy-744e8",
     storageBucket: "retrofy-744e8.appspot.com",
     messagingSenderId: "382143734938",
-    appId: "1:382143734938:web:xxxxxxxxxxxxxx" // opsional
+    appId: "1:382143734938:web:xxxxxx" // ini boleh kosong kalau tidak tahu
   };
 
   // Inisialisasi Firebase
   firebase.initializeApp(firebaseConfig);
   const auth = firebase.auth();
 
-  // Tangani login
+  // Tangani Form Login
   const form = document.querySelector("form");
-  form.addEventListener("submit", function (e) {
+  form.addEventListener("submit", (e) => {
     e.preventDefault();
 
     const email = form.email.value;
@@ -159,27 +159,13 @@
 
     auth.signInWithEmailAndPassword(email, password)
       .then((userCredential) => {
-        // Login sukses
-        alert("Login sukses!");
-        // Redirect ke halaman utama, misalnya dashboard
-        window.location.href = "https://mahenxyz.github.io/RETROFY.AI/";
+        alert("Login berhasil!");
+        console.log("User:", userCredential.user);
+        // Bisa redirect ke dashboard di sini
       })
       .catch((error) => {
-        // Gagal login
         alert("Login gagal: " + error.message);
       });
-  });
-
-  // Tangani klik lupa sandi
-  const forgot = document.querySelector(".forgot");
-  forgot.addEventListener("click", function (e) {
-    e.preventDefault();
-    const email = prompt("Masukkan email Anda untuk reset sandi:");
-    if (email) {
-      auth.sendPasswordResetEmail(email)
-        .then(() => alert("Link reset kata sandi telah dikirim ke email Anda."))
-        .catch((error) => alert("Gagal kirim link reset: " + error.message));
-    }
   });
 </script>
 </html>
