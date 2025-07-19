@@ -3,62 +3,183 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Login | RETROFY AI</title>
-  <!-- Firebase App (Core) -->
-<script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js"></script>
-<!-- Firebase Auth -->
-<script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js"></script>
+  <title>Masuk - Retrofy</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: linear-gradient(to bottom right, #fffef2, #fff9c4);
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: fadeIn 1.2s ease-in-out;
+    }
+
+    .login-container {
+      background: #ffffff;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 0 30px rgba(0,0,0,0.08);
+      max-width: 420px;
+      width: 100%;
+      text-align: center;
+      animation: slideUp 1s ease;
+    }
+
+    .login-container img {
+      width: 200px;
+      margin-bottom: 20px;
+      animation: popIn 1s ease;
+    }
+
+    .login-container h2 {
+      color: #ffc107;
+      margin-bottom: 20px;
+      font-weight: 600;
+      font-size: 1.5rem;
+    }
+
+    .login-container input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 2px solid #ffe57f;
+      border-radius: 10px;
+      outline: none;
+      transition: 0.3s;
+    }
+
+    .login-container input:focus {
+      border-color: #ffc107;
+      background: #fffde7;
+    }
+
+    .login-container button {
+      width: 100%;
+      padding: 12px;
+      background: #ffc107;
+      border: none;
+      border-radius: 10px;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+      margin-top: 15px;
+    }
+
+    .login-container button:hover {
+      background: #ffca28;
+    }
+
+    .login-container .forgot {
+      margin-top: 10px;
+      display: block;
+      color: #999;
+      font-size: 0.9rem;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    .login-container .forgot:hover {
+      color: #ffc107;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; } to { opacity: 1; }
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(50px); opacity: 0; } 
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes popIn {
+      from { transform: scale(0.8); opacity: 0; } 
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    @media (max-width: 480px) {
+      .login-container {
+        padding: 30px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <!-- Logo -->
+    <img src="RETROFY.png" alt="Logo Retrofy" />
+
+    <!-- Judul -->
+    <h2>Masuk ke Retrofy</h2>
+
+    <!-- Form Login -->
+    <form action="#" method="post">
+      <input type="text" name="phone" placeholder="Nomor HP" required />
+      <input type="email" name="email" placeholder="Email" required />
+      <input type="password" name="password" placeholder="Kata Sandi" required />
+      <button type="submit">Masuk</button>
+    </form>
+
+    <!-- Lupa Password -->
+    <a href="#" class="forgot">Lupa kata sandi?</a>
+  </div>
+</body>
+  <!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 
 <script>
+  // Konfigurasi Firebase
   const firebaseConfig = {
     apiKey: "AIzaSyDVd9RBctGvGmUBnyaZiu9JuDQ6UOgn6es",
-    authDomain: "RETROFYAI",
-    projectId: "Retrofy-744E8",
+    authDomain: "retrofy-744e8.firebaseapp.com",
+    projectId: "retrofy-744e8",
+    storageBucket: "retrofy-744e8.appspot.com",
     messagingSenderId: "382143734938",
+    appId: "1:382143734938:web:xxxxxxxxxxxxxx" // opsional
   };
 
   // Inisialisasi Firebase
   firebase.initializeApp(firebaseConfig);
-</script>
-  <script>
   const auth = firebase.auth();
 
-  function login() {
-    const email = document.getElementById("email").value;
-    const pass = document.getElementById("password").value;
+  // Tangani login
+  const form = document.querySelector("form");
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
 
-    auth.signInWithEmailAndPassword(email, pass)
+    const email = form.email.value;
+    const password = form.password.value;
+
+    auth.signInWithEmailAndPassword(email, password)
       .then((userCredential) => {
-        alert("Login berhasil!");
-        window.location.href = "index.html"; // atau halaman utama kamu
+        // Login sukses
+        alert("Login sukses!");
+        // Redirect ke halaman utama, misalnya dashboard
+        window.location.href = "https://mahenxyz.github.io/RETROFY.AI/";
       })
       .catch((error) => {
-        alert("Gagal login: " + error.message);
+        // Gagal login
+        alert("Login gagal: " + error.message);
       });
-  }
+  });
 
-  function forgotPassword() {
-    const email = prompt("Masukkan email untuk reset sandi:");
+  // Tangani klik lupa sandi
+  const forgot = document.querySelector(".forgot");
+  forgot.addEventListener("click", function (e) {
+    e.preventDefault();
+    const email = prompt("Masukkan email Anda untuk reset sandi:");
     if (email) {
       auth.sendPasswordResetEmail(email)
-        .then(() => {
-          alert("Email reset sandi telah dikirim.");
-        })
-        .catch((error) => {
-          alert("Error: " + error.message);
-        });
+        .then(() => alert("Link reset kata sandi telah dikirim ke email Anda."))
+        .catch((error) => alert("Gagal kirim link reset: " + error.message));
     }
-  }
+  });
 </script>
-
-</head>
-<body style="font-family: sans-serif; text-align: center; padding: 2rem;">
-  <h2>Masuk ke RETROFY</h2>
-  <form>
-    <input type="email" placeholder="Email" required><br><br>
-    <input type="password" placeholder="Kata Sandi" required><br><br>
-    <button type="submit">Masuk</button>
-  </form>
-  <p><a href="lupa.html">Lupa kata sandi?</a></p>
-</body>
 </html>
