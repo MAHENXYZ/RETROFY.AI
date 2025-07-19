@@ -2,173 +2,118 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Masuk - Retrofy</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login - Retrofy</title>
   <style>
-    * {
-      margin: 0; padding: 0; box-sizing: border-box;
-      font-family: 'Poppins', sans-serif;
-    }
-
     body {
-      background: linear-gradient(to bottom right, #fffef2, #fff9c4);
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      animation: fadeIn 1.2s ease-in-out;
-    }
-
-    .login-container {
-      background: #ffffff;
+      font-family: sans-serif;
+      background: #f3f3f3;
       padding: 40px;
-      border-radius: 20px;
-      box-shadow: 0 0 30px rgba(0,0,0,0.08);
-      max-width: 420px;
-      width: 100%;
+    }
+    .login-container {
+      max-width: 400px;
+      margin: auto;
+      background: white;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h2 {
       text-align: center;
-      animation: slideUp 1s ease;
     }
-
-    .login-container img {
-      width: 200px;
-      margin-bottom: 20px;
-      animation: popIn 1s ease;
-    }
-
-    .login-container h2 {
-      color: #ffc107;
-      margin-bottom: 20px;
-      font-weight: 600;
-      font-size: 1.5rem;
-    }
-
-    .login-container input {
-      width: 100%;
-      padding: 12px;
-      margin: 10px 0;
-      border: 2px solid #ffe57f;
-      border-radius: 10px;
-      outline: none;
-      transition: 0.3s;
-    }
-
-    .login-container input:focus {
-      border-color: #ffc107;
-      background: #fffde7;
-    }
-
-    .login-container button {
-      width: 100%;
-      padding: 12px;
-      background: #ffc107;
-      border: none;
-      border-radius: 10px;
-      color: #000;
-      font-weight: bold;
-      cursor: pointer;
-      transition: 0.3s;
-      margin-top: 15px;
-    }
-
-    .login-container button:hover {
-      background: #ffca28;
-    }
-
-    .login-container .forgot {
-      margin-top: 10px;
+    input {
       display: block;
-      color: #999;
-      font-size: 0.9rem;
-      text-decoration: none;
-      transition: 0.3s;
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      margin-bottom: 20px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
     }
-
-    .login-container .forgot:hover {
-      color: #ffc107;
+    button {
+      width: 100%;
+      padding: 10px;
+      background: black;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
     }
-
-    @keyframes fadeIn {
-      from { opacity: 0; } to { opacity: 1; }
+    button:hover {
+      background: #333;
     }
-
-    @keyframes slideUp {
-      from { transform: translateY(50px); opacity: 0; } 
-      to { transform: translateY(0); opacity: 1; }
-    }
-
-    @keyframes popIn {
-      from { transform: scale(0.8); opacity: 0; } 
-      to { transform: scale(1); opacity: 1; }
-    }
-
-    @media (max-width: 480px) {
-      .login-container {
-        padding: 30px 20px;
-      }
+    .forgot {
+      margin-top: 10px;
+      text-align: center;
+      color: blue;
+      cursor: pointer;
+      font-size: 14px;
     }
   </style>
 </head>
 <body>
+
   <div class="login-container">
-    <!-- Logo -->
-    <img src="RETROFY.png" alt="Logo Retrofy" />
-
-    <!-- Judul -->
-    <h2>Masuk ke Retrofy</h2>
-
-    <!-- Form Login -->
-    <form id="login-form">
-      <input type="text" name="phone" placeholder="Nomor HP" required />
-      <input type="email" name="email" placeholder="Email" required />
-      <input type="password" name="password" placeholder="Kata Sandi" required />
-      <button type="submit">Masuk</button>
-    </form>
-
-    <!-- Lupa Password -->
-    <a href="#" class="forgot">Lupa kata sandi?</a>
+    <h2>Login Retrofy</h2>
+    <input type="email" id="email" placeholder="Email" />
+    <input type="password" id="password" placeholder="Password" />
+    <button onclick="loginUser()">Masuk</button>
+    <div class="forgot" onclick="lupaPassword()">Lupa Password?</div>
   </div>
 
-  <!-- Firebase SDK -->
-<!-- Firebase SDK -->
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+  <!-- Firebase SDK (compat version) -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics-compat.js"></script>
 
   <script>
-    // Konfigurasi Firebase
     const firebaseConfig = {
       apiKey: "AIzaSyDVd9RBctGvGmUBnyaZiu9JuDQ6UOgn6es",
       authDomain: "retrofy-744e8.firebaseapp.com",
       projectId: "retrofy-744e8",
-      storageBucket: "retrofy-744e8.appspot.com",
+      storageBucket: "retrofy-744e8.firebasestorage.app",
       messagingSenderId: "382143734938",
-      appId: "1:382143734938:web:f84e7a41f8b99f507b2b23" // Bisa dikosongkan kalau tidak tahu
+      appId: "1:382143734938:web:f84e7a41f8b99f507b2b23",
+      measurementId: "G-DNCL9PBXX0"
     };
 
     // Inisialisasi Firebase
     firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
+    firebase.analytics();
 
-    // Tangani Login
-    const form = document.getElementById("login-form");
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
+    // Fungsi login
+    function loginUser() {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
 
-      const email = form.email.value;
-      const password = form.password.value;
-
-      auth.signInWithEmailAndPassword(email, password)
+      firebase.auth().signInWithEmailAndPassword(email, password)
         .then((userCredential) => {
-          alert("Login berhasil!");
-          console.log("User:", userCredential.user);
-          // redirect bisa ditambahkan di sini
+          alert("Login sukses!");
+          window.location.href = "index.html"; // ganti ke halaman dashboard kamu
         })
         .catch((error) => {
           alert("Login gagal: " + error.message);
         });
-    });
+    }
+
+    // Fungsi lupa password
+    function lupaPassword() {
+      const email = document.getElementById("email").value;
+
+      if (!email) {
+        alert("Masukkan email terlebih dahulu.");
+        return;
+      }
+
+      firebase.auth().sendPasswordResetEmail(email)
+        .then(() => {
+          alert("Link reset password sudah dikirim ke email kamu.");
+        })
+        .catch((error) => {
+          alert("Gagal kirim reset password: " + error.message);
+        });
+    }
   </script>
 </body>
 </html>
