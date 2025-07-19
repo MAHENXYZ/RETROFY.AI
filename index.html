@@ -17,22 +17,23 @@
     body {
       background-color: #f8f8f8;
       color: #111;
-      padding: 0;
       margin: 0;
+      padding: 0;
     }
 
     .hero {
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      padding: 60px 40px;
-      background: linear-gradient(135deg, #fff, #f0f0f0);
-      min-height: 100vh;
+      justify-content: space-between;
+      padding: 60px 10%;
       gap: 40px;
+      flex-wrap: wrap;
+      background: linear-gradient(135deg, #ffffff, #f0f0f0);
     }
 
-    .hero .text {
-      flex: 1;
+    .text {
+      flex: 1 1 400px;
+      max-width: 600px;
     }
 
     .hero h1 {
@@ -48,15 +49,15 @@
       color: #555;
     }
 
-    .hero .buttons {
+    .buttons {
       display: flex;
-      gap: 16px;
       flex-wrap: wrap;
+      gap: 16px;
     }
 
-    .hero .buttons button {
+    .buttons button {
       background: none;
-      border: 2px solid black;
+      border: 2px solid #000;
       padding: 12px 20px;
       font-size: 16px;
       font-weight: 600;
@@ -68,24 +69,25 @@
       border-radius: 8px;
     }
 
-    .hero .buttons button:hover {
+    .buttons button:hover {
       background-color: #000;
       color: #fff;
     }
 
     .hero img {
-      max-width: 100%;
+      flex: 1 1 300px;
+      max-width: 500px;
+      width: 100%;
       height: auto;
       border-radius: 20px;
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-      flex: 1;
     }
 
     @media (max-width: 768px) {
       .hero {
         flex-direction: column;
-        text-align: center;
         padding: 40px 20px;
+        text-align: center;
       }
 
       .hero h1 {
@@ -96,12 +98,12 @@
         font-size: 16px;
       }
 
-      .hero .buttons {
+      .buttons {
         flex-direction: column;
         align-items: center;
       }
 
-      .hero .buttons button {
+      .buttons button {
         width: 100%;
         max-width: 280px;
         justify-content: center;
