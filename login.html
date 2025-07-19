@@ -4,6 +4,53 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Login | RETROFY AI</title>
+  <!-- Firebase App (Core) -->
+<script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js"></script>
+<!-- Firebase Auth -->
+<script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js"></script>
+
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyDVd9RBctGvGmUBnyaZiu9JuDQ6UOgn6es",
+    authDomain: "RETROFYAI",
+    projectId: "Retrofy-744E8",
+    messagingSenderId: "382143734938",
+  };
+
+  // Inisialisasi Firebase
+  firebase.initializeApp(firebaseConfig);
+</script>
+  <script>
+  const auth = firebase.auth();
+
+  function login() {
+    const email = document.getElementById("email").value;
+    const pass = document.getElementById("password").value;
+
+    auth.signInWithEmailAndPassword(email, pass)
+      .then((userCredential) => {
+        alert("Login berhasil!");
+        window.location.href = "index.html"; // atau halaman utama kamu
+      })
+      .catch((error) => {
+        alert("Gagal login: " + error.message);
+      });
+  }
+
+  function forgotPassword() {
+    const email = prompt("Masukkan email untuk reset sandi:");
+    if (email) {
+      auth.sendPasswordResetEmail(email)
+        .then(() => {
+          alert("Email reset sandi telah dikirim.");
+        })
+        .catch((error) => {
+          alert("Error: " + error.message);
+        });
+    }
+  }
+</script>
+
 </head>
 <body style="font-family: sans-serif; text-align: center; padding: 2rem;">
   <h2>Masuk ke RETROFY</h2>
